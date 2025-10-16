@@ -1,0 +1,197 @@
+/* Custom styles for Sync-Sasha documentation */
+
+/* Hero section styling */
+.md-typeset h2 {
+  font-weight: 600;
+}
+
+/* Grid cards for features */
+.grid.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.grid.cards > * {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.grid.cards > *:hover {
+  border-color: var(--md-accent-fg-color);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Code block improvements */
+.highlight pre {
+  border-radius: 0.5rem;
+  border: 1px solid var(--md-code-bg-color);
+}
+
+/* Admonition custom colors */
+.md-typeset .admonition.tip {
+  border-left-color: #00c853;
+}
+
+.md-typeset .admonition.warning {
+  border-left-color: #ff9100;
+}
+
+.md-typeset .admonition.danger {
+  border-left-color: #ff1744;
+}
+
+/* API endpoint badges */
+.api-method {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-right: 0.5rem;
+}
+
+.api-method.get {
+  background-color: #61affe;
+  color: white;
+}
+
+.api-method.post {
+  background-color: #49cc90;
+  color: white;
+}
+
+.api-method.put {
+  background-color: #fca130;
+  color: white;
+}
+
+.api-method.delete {
+  background-color: #f93e3e;
+  color: white;
+}
+
+/* Status code badges */
+.status-code {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: var(--md-code-font);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-code.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-code.error {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Table improvements */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-code-bg-color);
+  font-weight: 600;
+}
+
+/* Mermaid diagram improvements */
+.mermaid {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* Custom alert boxes */
+.custom-alert {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  border-left: 4px solid;
+}
+
+.custom-alert.info {
+  background-color: rgba(33, 150, 243, 0.1);
+  border-left-color: #2196f3;
+}
+
+.custom-alert.success {
+  background-color: rgba(76, 175, 80, 0.1);
+  border-left-color: #4caf50;
+}
+
+.custom-alert.warning {
+  background-color: rgba(255, 152, 0, 0.1);
+  border-left-color: #ff9800;
+}
+
+.custom-alert.danger {
+  background-color: rgba(244, 67, 54, 0.1);
+  border-left-color: #f44336;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Footer improvements */
+.md-footer__inner {
+  padding: 1rem 0;
+}
+
+/* Language selector improvements */
+.md-select__link {
+  transition: background-color 0.2s ease;
+}
+
+.md-select__link:hover {
+  background-color: var(--md-accent-fg-color);
+}
+
+/* Copy button for code blocks */
+.md-clipboard {
+  transition: opacity 0.2s ease;
+}
+
+.md-clipboard:hover {
+  opacity: 1 !important;
+}
+
+/* Navigation improvements */
+.md-nav__link--active {
+  font-weight: 600;
+}
+
+/* Search improvements */
+.md-search__form {
+  border-radius: 0.5rem;
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 76.1875em) {
+  .grid.cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Print styles */
+@media print {
+  .md-header,
+  .md-footer,
+  .md-nav,
+  .md-sidebar {
+    display: none;
+  }
+}

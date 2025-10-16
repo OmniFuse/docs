@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "sync-collection",
+		"name": "Sync API",
+		"description": "API collection for Sync contact transfer integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{api_key}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://import-api.liddex.ru",
+			"type": "string"
+		},
+		{
+			"key": "api_key",
+			"value": "demo_api_key_12345",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Health Checks",
+			"item": [
+				{
+					"name": "Basic Health Check",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/healthz",
+							"host": ["{{base_url}}"],
+							"path": ["healthz"]
+						}
+					}
+				},
+				{
+					"name": "Readiness Check",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/readyz",
+							"host": ["{{base_url}}"],
+							"path": ["readyz"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Contact Import",
+			"item": [
+				{
+					"name": "Import Contacts (Single)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"phone\": \"+79001234567\",\n  \"tags\": [\"лид\", \"сайт\"],\n  \"additionalFields\": {\n    \"source\": \"postman\",\n    \"campaign\": \"test\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/contacts/import",
+							"host": ["{{base_url}}"],
+							"path": ["v1", "contacts", "import"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Contacts (Array)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"phone\": \"+79001234567\",\n    \"tags\": [\"лид\"],\n    \"additionalFields\": {\n      \"source\": \"website\"\n    }\n  },\n  {\n    \"phone\": \"89001234568\",\n    \"tags\": [\"клиент\"],\n    \"additionalFields\": {\n      \"source\": \"referral\"\n    }\n  }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/contacts/import",
+							"host": ["{{base_url}}"],
+							"path": ["v1", "contacts", "import"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Contacts (Debug Mode)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Debug",
+								"value": "true",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"phone\": \"+79001234567\",\n    \"tags\": [\"test\"],\n    \"additionalFields\": {}\n  },\n  {\n    \"phone\": \"invalid\",\n    \"tags\": [],\n    \"additionalFields\": {}\n  }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/contacts/import",
+							"host": ["{{base_url}}"],
+							"path": ["v1", "contacts", "import"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import with Correlation ID",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Idempotency-Key",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "X-Correlation-ID",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"phone\": \"+79001234567\",\n    \"tags\": [\"tracked\"],\n    \"additionalFields\": {}\n  }\n]"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/contacts/import",
+							"host": ["{{base_url}}"],
+							"path": ["v1", "contacts", "import"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job Status",
+			"item": [
+				{
+					"name": "Get Job Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/contacts/import/:job_id",
+							"host": ["{{base_url}}"],
+							"path": ["v1", "contacts", "import", ":job_id"],
+							"variable": [
+								{
+									"key": "job_id",
+									"value": "550e8400-e29b-41d4-a716-446655440000",
+									"description": "Job ID from import response"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Idempotency",
+			"item": [
+				{
+					"name": "Get Idempotency Record",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/v1/idempotency/:key",
+							"host": ["{{base_url}}"],
+							"path": ["v1", "idempotency", ":key"],
+							"variable": [
+								{
+									"key": "key",
+									"value": "550e8400-e29b-41d4-a716-446655440000",
+									"description": "Idempotency key"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
+
